@@ -10,6 +10,8 @@ const App = () => {
   const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState();
 
+  const baseUrl = 'http://localhost:3001/api-v1/tasks'
+
   useEffect(() => {
     getTasks()
   }, []);
@@ -33,7 +35,7 @@ const App = () => {
       try {
         const res = await axios({
           method: task ? 'PUT' : 'POST',
-          url: `http://localhost:3001/${task ? `update-task?id=${task._id}` : 'add-new-task'
+          url: `${baseUrl}/${task ? `update-task?id=${task._id}` : 'add-new-task'
             }`,
           headers: { 'Content-Type': 'application/json' },
           data: { content }
@@ -53,7 +55,7 @@ const App = () => {
   }
 
   const getTasks = async () => {
-    const api = 'http://localhost:3001/get-tasks';
+    const api = `${baseUrl}/get-tasks`;
     try {
 
       const res = await axios(api)
@@ -68,7 +70,7 @@ const App = () => {
   }
 
   const removeTask = async (id) => {
-    const api = `http://localhost:3001/remove-task?id=${id}`;
+    const api = `${baseUrl}/remove-task?id=${id}`;
     try {
       await axios({
         method: 'delete',
